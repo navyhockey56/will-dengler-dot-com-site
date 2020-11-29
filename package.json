@@ -1,16 +1,22 @@
 {
-  "name": "y",
+  "name": "will-dengler-dot-com-site",
   "version": "1.0.0",
   "description": "My personal website",
   "main": "index.js",
   "scripts": {
-    "start": "run-p dev:server dev:app",
-    "dev:server": "SERVER_PORT=1234 node ./server/index.js",
-    "dev:app": "SERVER_PORT=1234 NODE_ENV=development mode=development webpack serve",
+    "start": "node ./server/index.js",
+    "heroku-postbuild": "webpack -p",
+    "start:dev": "run-p dev:server dev:app",
+    "dev:server": "PORT=1234 node ./server/index.js",
+    "dev:app": "PORT=1234 NODE_ENV=development mode=development webpack serve",
     "prod": "NODE_ENV=production mode=production webpack"
   },
   "author": "Will Dengler",
   "license": "ISC",
+  "engines": {
+    "node": "14.15.1",
+    "npm": "6.14.8"
+  },
   "devDependencies": {
     "css-loader": "^5.0.1",
     "html-loader": "^1.3.2",

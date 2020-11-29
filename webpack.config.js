@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ProgressPlugin } = require("webpack");
 const webpackMerge = require('webpack-merge');
 
-const mode = process.env.mode || "none;"
+const mode = process.env.mode || process.env.NODE_ENV || "none";
 
 const environmentWebpack = () => {
   try {
