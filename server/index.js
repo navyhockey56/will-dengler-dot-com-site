@@ -1,8 +1,20 @@
+require('dotenv').config();
+
 const server = require("express")();
+const bodyParser = require("body-parser");
 const path = require("path");
+
+const sendMail = require("./mailer");
+
 const serverPort = process.env.PORT || 1234;
 
-server.post("/api/contact", (_request, response) => {
+server.use(bodyParser.json());
+
+server.post("/api/contact", (request, response) => {
+  const { email, message } = request.body;
+  const body = `${message}\n-------------------\nSent from: ${email}`;
+
+  sendMail({ subject: "WillDengler.com", body });
   response.send("Received");
 });
 

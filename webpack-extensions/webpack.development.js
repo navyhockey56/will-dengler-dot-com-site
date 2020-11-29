@@ -1,6 +1,4 @@
-const path = require('path');
-
-const SERVER_PORT = process.env.SERVER_PORT || 1234;
+const PORT = process.env.PORT || 1234;
 
 module.exports = {
   devtool: "cheap-module-source-map",
