@@ -1,6 +1,8 @@
 require('bulma/css/bulma.min.css');
 require('./index.css');
 
+require('./favicon.ico');
+
 // Mount the body of the page
 const pageBody = require('./body.html');
 const pageMount = document.getElementById("page-mount");
