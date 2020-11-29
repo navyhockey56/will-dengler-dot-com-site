@@ -13,9 +13,8 @@ server.use(bodyParser.json());
 server.post("/api/contact", (request, response) => {
   const { email, message } = request.body;
   const body = `${message}\n-------------------\nSent from: ${email}`;
-
-  sendMail({ subject: "WillDengler.com", body });
-  response.send("Received");
+  const onMailSent = () => response.send("Sent.");
+  sendMail({ subject: "WillDengler.com", body }, onMailSent);
 });
 
 server.get("/*.js", function(request, response) {

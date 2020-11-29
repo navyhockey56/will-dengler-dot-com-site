@@ -15,7 +15,7 @@ const transport = mailer.createTransport({
   }
 });
 
-module.exports = ({ subject, body }) => {
+module.exports = ({ subject, body }, callback) => {
   const message = {
     from: sendFrom,
     to: sendTo,
@@ -29,5 +29,7 @@ module.exports = ({ subject, body }) => {
     } else {
       console.log("Successfully sent mail", info);
     }
-  })
+
+    if (callback) callback(error, info);
+  });
 }

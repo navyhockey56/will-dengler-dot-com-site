@@ -6,6 +6,16 @@ const pageBody = require('./body.html');
 const pageMount = document.getElementById("page-mount");
 pageMount.innerHTML = pageBody;
 
+const post = (endpoint, payload) => {
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+};
+
 // On Click function for sending an email
 window.sendMessage = () => {
   const email = document.getElementById("email").value;
@@ -14,11 +24,12 @@ window.sendMessage = () => {
   const endpoint = "/api/contact";
   const payload = { email, message };
 
-  fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
+  const sendMessageButton = document.getElementById("send-message-button");
+  sendMessageButton.classList.add('is-loading');
+  sendMessageButton.disabled = true;
+
+  post(endpoint, payload).then(() => {
+    sendMessageButton.classList.remove('is-loading');
+    sendMessageButton.disabled = false;
   });
 };
