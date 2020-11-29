@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./server/index.js",
-    "heroku-postbuild": "webpack -p",
+    "heroku-postbuild": "webpack",
     "start:dev": "run-p dev:server dev:app",
     "dev:server": "PORT=1234 node ./server/index.js",
     "dev:app": "PORT=1234 NODE_ENV=development mode=development webpack serve",
