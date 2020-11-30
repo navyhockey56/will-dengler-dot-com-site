@@ -8,6 +8,16 @@ const sendMail = require("./mailer");
 
 const serverPort = process.env.PORT || 1234;
 
+if (process.env.NODE_ENV == 'production') {
+  server.enable('trust proxy');
+  server.use(function(request, response, next) {
+    if (!request.secure) {
+       return response.redirect("https://" + request.headers.host + request.url);
+    }
+    next();
+  });
+}
+
 server.use(bodyParser.json());
 
 server.post("/api/contact", (request, response) => {
