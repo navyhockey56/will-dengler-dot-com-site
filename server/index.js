@@ -7,7 +7,9 @@ const path = require("path");
 const sendMail = require("./mailer");
 
 const serverPort = process.env.PORT || 1234;
+const projectRoot = path.resolve(__dirname, '..');
 
+// Force HTTPS in production
 if (process.env.NODE_ENV == 'production') {
   server.enable('trust proxy');
   server.use(function(request, response, next) {
@@ -18,6 +20,7 @@ if (process.env.NODE_ENV == 'production') {
   });
 }
 
+// Enable reading JSON payloads from requests
 server.use(bodyParser.json());
 
 server.post("/api/contact", (request, response) => {
@@ -27,14 +30,17 @@ server.post("/api/contact", (request, response) => {
   sendMail({ subject: "WillDengler.com", body }, onMailSent);
 });
 
+server.get("*.ico", (request, response) => {
+  const icon = `${request.params['0']}.ico`
+  response.sendFile(icon, { root: `${projectRoot}/dist/` });
+});
+
 server.get("/*.js", function(request, response) {
-  const projectRoot = path.resolve(__dirname, '..');
   const script = `${request.params['0']}.js`
   response.sendFile(script, { root: `${projectRoot}/dist/` });
 });
 
 server.get('/*', function(_request, response) {
-  const projectRoot = path.resolve(__dirname, '..');
   response.sendFile('index.html', { root: `${projectRoot}/dist/` });
 });
 
